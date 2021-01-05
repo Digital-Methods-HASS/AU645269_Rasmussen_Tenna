@@ -1,0 +1,55 @@
+---
+title: "AIDS"
+author: "Tenna Rasmussen"
+date: "11/27/2020"
+output:
+  word_document: default
+  html_document: default
+---
+# Loading packages 
+
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+# Loading data 
+
+```{r}
+AIDS <- read_csv("Data/smurf-2020-11-27_11_23.csv", skip = 2)
+```
+
+# Analysis 
+ 
+```{r}
+AIDS %>% 
+  mutate(AIDS_freq = AIDS / total_articles) %>% 
+  mutate(HIV_freq = HIV / total_articles) -> AIDS
+```
+
+# Visualisation above AIDS
+ 
+```{r}
+AIDS %>% 
+  slice(201:251) %>% 
+  ggplot() + 
+  geom_line(mapping = aes(x = year, y = AIDS_freq)) + 
+  labs(x = "year: 1950-2000",
+      y = "AIDS",
+      title = "Count of the word, AIDS, found in danish newspapers")
+```
+
+# Visualisation above HIV
+ 
+```{r}
+AIDS %>%
+  slice(201:251) %>% 
+  ggplot() +
+  geom_line(mapping = aes(x = year, y = HIV_freq)) +
+  labs(x = "year: 1950-2000",
+       y = "HIV",
+       title = "Count of the word, HIV, found in danish newspapers")
+```
+
+
